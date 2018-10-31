@@ -1,11 +1,27 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import { Button, Card, CardSection, Input,Spinner } from './common';
+import { Button, Card, CardSection, Input, Spinner } from './common';
 class LoginForm extends Component {
     state = { email: '', password: '', error='', loading: false };
     onButtonPress() {
         const { email, password } = this.state;
         this.setState({ error='', loading: true });
+        //this.onLoginSuccess.bind(this)
+        //this.onLoginFail.bind(this);
+
+    }
+    onLoginSuccess() {
+        this.setState({
+            email: '',
+            password: '',
+            loading: false,
+            error: ''
+        });
+    }
+    onLoginFail() {
+        this.setState({
+            error: 'Authentication Failed', loading: false
+        });
     }
     renderButton() {
         if (this.state.loading) {
