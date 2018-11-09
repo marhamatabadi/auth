@@ -1,7 +1,25 @@
 import React, { Component } from 'react';
-import { Button, Card, CardSection, Input } from './common';
+import { Button, Card, CardSection, Input,Spinner } from './common';
+import { Text } from 'react-native';
 class LoginForm extends Component {
-    state = { email: '', password: '' };
+    state = { email: '', password: '', error: '', loading: false };
+    onButtonPress() {
+        const { email, password } = this.state;
+        this.setState({ error: '', loading: true });
+    }
+    renderButton() {
+        if (this.state.loading) {
+            consol.log("loading true");
+            return <Spinner size='small' />;
+        }
+        consol.log("loading false");
+        return (
+            
+            <Button onPress={this.onButtonPress.bind(this)}>
+                Log in
+            </Button>
+        );
+    }
     render() {
         return (
             <Card>
@@ -23,13 +41,21 @@ class LoginForm extends Component {
                         onChangeText={password => this.setState({ password })}
                     />
                 </CardSection>
+                <Text style={styles.errorTextStyle}>
+                    {this.state.error}
+                </Text>
                 <CardSection>
-                    <Button>
-                        Log in
-                    </Button>
+                    {this.renderButton()}
                 </CardSection>
             </Card>
         );
     }
 }
+const styles = {
+    errorTextStyle: {
+        fontSize: 20,
+        alignSelf: 'center',
+        color: 'red'
+    }
+};
 export default LoginForm;
